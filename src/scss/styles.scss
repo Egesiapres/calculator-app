@@ -1,0 +1,52 @@
+@import 'bootstrap/scss/bootstrap';
+
+$colors: (
+  'blue': $blue,
+  'purple': $purple,
+);
+
+button {
+  border-radius: 50;
+}
+
+// default palette
+.bg-blue {
+  background-color: $blue-100;
+}
+
+.secondary-blue {
+  background-color: $blue-300;
+  border-color: $blue-300;
+  color: white
+}
+
+.secondary-blue:hover {
+  background-color: $blue-400;
+  border-color: $blue-400;
+  color: white
+}
+
+.primary-purple {
+  background-color: $purple-500;
+  border-color: $purple-500;
+  color: white
+}
+
+// lilac palette
+.primary-purple:hover {
+  background-color: $purple-600;
+  border-color: $purple-600;
+  color: white
+}
+
+.secondary-purple {
+  background-color: $purple-300;
+  border-color: $purple-300;
+  color: white
+}
+
+.secondary-purple:hover {
+  background-color: $purple-400;
+  border-color: $purple-400;
+  color: white
+}
