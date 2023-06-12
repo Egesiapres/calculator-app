@@ -14,10 +14,13 @@
     <title>Calculator</title>
   </head>
 
-  <body>
-    <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
-      <div class="col-8 p-3 bg-body-secondary rounded">
-        <form class="row justify-content-center p-2">
+  <body class="bg-secondary">
+    <div
+      class="d-flex justify-content-center align-items-center"
+      style="height: 100vh"
+    >
+      <div class="col-6 p-3 bg-secondary-subtle rounded">
+        <form class="row p-2">
           <div class="col">
             <input
               type="tel"
@@ -54,7 +57,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-primary col-3 m-1"
+            class="btn btn-primary col m-1"
             id="div"
             value="/"
           >
@@ -88,14 +91,14 @@
           </button>
           <button
             type="button"
-            class="btn btn-primary col-3 m-1"
+            class="btn btn-primary col m-1"
             id="mul"
             value="x"
           >
             x
           </button>
         </div>
-        <div class="row justify-content-center m-1">
+        <div class="row m-1">
           <button
             type="button"
             class="btn btn-light col m-1"
@@ -122,14 +125,14 @@
           </button>
           <button
             type="button"
-            class="btn btn-primary col-3 m-1"
+            class="btn btn-primary col m-1"
             id="minus"
             value="-"
           >
             -
           </button>
         </div>
-        <div class="row justify-content-center m-1">
+        <div class="row m-1">
           <button
             type="button"
             class="btn btn-light col m-1"
@@ -156,22 +159,25 @@
           </button>
           <button
             type="button"
-            class="btn btn-primary col-3 m-1"
+            class="btn btn-primary col m-1"
             id="plus"
             value="+"
           >
             +
           </button>
         </div>
-        <div class="row justify-content-center m-1">
-          <button
-            type="button"
-            class="btn btn-light col m-1"
-            id="zero"
-            value="0"
-          >
-            0
-          </button>
+        <div class="row m-1">
+          <div class="col-6 ps-0 pe-2">
+            <button
+              type="button"
+              class="btn container btn-light m-1"
+              id="zero"
+              value="0"
+            >
+              0
+            </button>
+          </div>
+
           <button
             type="button"
             class="btn btn-light col m-1"
@@ -182,7 +188,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-primary col-3 m-1"
+            class="btn btn-primary col m-1"
             id="equal"
             value="="
           >
@@ -190,10 +196,10 @@
           </button>
         </div>
 
-        <div class="row justify-content-center m-1">
+        <div class="row m-1">
           <button
             type="button"
-            class="btn col m-1 text-white primary-purple"
+            class="btn col m-1 primary-purple"
             id="lilac"
             value="false"
           >
@@ -205,7 +211,7 @@
             id="random"
             value="false"
           >
-            Random
+            Shuffle
           </button>
           <button
             type="button"
@@ -214,6 +220,14 @@
             value="false"
           >
             Dark
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary col m-1"
+            id="apple"
+            value="false"
+          >
+            
           </button>
         </div>
       </div>
