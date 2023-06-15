@@ -3,46 +3,100 @@
 $colors: (
   'blue': $blue,
   'purple': $purple,
+  'orange': $orange,
+  'gray': $gray-600,
+  'gray-dark': $gray-800,
 );
 
+$text-color: white;
+
 button {
-  border-radius: 50;
+  border-radius: 7px;
 }
 
 // default palette
-.secondary-blue {
+.blue-secondary {
   background-color: $blue-300;
-  border-color: $blue-300;
-  color: white
-}
+  border: solid $blue-300;
+  color: $text-color;
 
-.secondary-blue:hover {
-  background-color: $blue-400;
-  border-color: $blue-400;
-  color: white
-}
+  &:hover {
+    background-color: $blue-400;
+    border: solid $blue-400;
+    color: $text-color;
+  }
 
-.primary-purple {
-  background-color: $purple-500;
-  border-color: $purple-500;
-  color: white
+  &:active {
+    background-color: darken($blue-400, 2%);
+    border: solid darken($blue-400, 2%);
+    color: $text-color
+  }
 }
 
 // lilac palette
-.primary-purple:hover {
-  background-color: $purple-600;
-  border-color: $purple-600;
-  color: white
+.lilac-primary {
+  background-color: $purple-500;
+  border: solid $purple-500;
+  color: $text-color;
+
+  &:hover {
+    background-color: $purple-600;
+    border: solid $purple-600;
+    color: $text-color;
+  }
+
+  &:active {
+    background-color: darken($purple-600, 2%);
+    border: solid darken($purple-600, 2%);
+    color: $text-color;
+  }
 }
 
-.secondary-purple {
+.lilac-secondary {
   background-color: $purple-300;
   border-color: $purple-300;
-  color: white
+  color: $text-color;
+
+  &:hover {
+    background-color: $purple-400;
+    border-color: $purple-400;
+    color: $text-color;
+  }
 }
 
-.secondary-purple:hover {
-  background-color: $purple-400;
-  border-color: $purple-400;
-  color: white
+// apple palette
+.apple-primary {
+  background-color: $orange-500;
+  border-color: $orange-500;
+  color: $text-color;
+
+  &:hover {
+    background-color: $orange-600;
+    border-color: $orange-600;
+    color: $text-color;
+  }
+}
+
+.apple-secondary {
+  background-color: $gray-700;
+  border-color: $gray-700;
+  color: $text-color;
+
+  &:hover {
+    background-color: $gray-800;
+    border-color: $gray-800;
+    color: $text-color;
+  }
+}
+
+.apple-number {
+  background-color: $gray-500;
+  border-color: $gray-500;
+  color: $text-color;
+
+  &:hover {
+    background-color: $gray-600;
+    border-color: $gray-600;
+    color: $text-color;
+  }
 }

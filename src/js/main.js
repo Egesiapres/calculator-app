@@ -4,49 +4,75 @@ const keypad = [
   {
     name: 'numbers',
     values: [
-      { id: 'zero', value: '0' },
-      { id: 'comma', value: '.' },
-      { id: 'one', value: '1' },
-      { id: 'two', value: '2' },
-      { id: 'three', value: '3' },
-      { id: 'four', value: '4' },
-      { id: 'five', value: '5' },
-      { id: 'six', value: '6' },
-      { id: 'seven', value: '7' },
-      { id: 'eight', value: '8' },
-      { id: 'nine', value: '9' },
+      { id: 'zero', value: '0', role: 'number' },
+      { id: 'comma', value: '.', role: 'number' },
+      { id: 'one', value: '1', role: 'number' },
+      { id: 'two', value: '2', role: 'number' },
+      { id: 'three', value: '3', role: 'number' },
+      { id: 'four', value: '4', role: 'number' },
+      { id: 'five', value: '5', role: 'number' },
+      { id: 'six', value: '6', role: 'number' },
+      { id: 'seven', value: '7', role: 'number' },
+      { id: 'eight', value: '8', role: 'number' },
+      { id: 'nine', value: '9', role: 'number' },
     ],
     class: 'btn btn-light col m-1',
   },
   {
-    name: 'operators',
+    name: 'primary-operators',
     values: [
-      { id: 'plus', value: '+' },
-      { id: 'minus', value: '-' },
-      { id: 'mul', value: 'x' },
-      { id: 'div', value: '/' },
-      { id: 'equal', value: '=' },
+      { id: 'plus', value: '+', role: 'primary' },
+      { id: 'minus', value: '-', role: 'primary' },
+      { id: 'mul', value: 'x', role: 'primary' },
+      { id: 'div', value: '/', role: 'primary' },
+      { id: 'equal', value: '=', role: 'primary' },
     ],
-    class: 'btn btn-primary col-3 m-1',
+    class: 'btn btn-primary col m-1',
   },
   {
-    name: 'misc',
+    name: 'secondary-operators',
     values: [
-      { id: 'cancel', value: 'C' },
-      { id: 'percent', value: '%' },
-      { id: 'negate', value: '+/-' },
+      { id: 'cancel', value: 'C', role: 'secondary' },
+      { id: 'percent', value: '%', role: 'secondary' },
+      { id: 'negate', value: '+/-', role: 'secondary' },
     ],
-    class: 'btn btn-secondary col m-1',
+    class: 'btn blue-secondary col m-1',
   },
   {
     name: 'color-themes',
     values: [
-      { id: 'lilac', value: 'false' },
+      {
+        id: 'lilac',
+        inactive: {
+          text: 'Lilac',
+          button_class: 'lilac-primary',
+        },
+        active: {
+          text: 'Blue',
+          button_class: 'btn btn-primary col m-1',
+          primary_class: 'lilac-primary',
+          secondary_class: ' lilac-secondary',
+          number_class: 'btn btn-light col m-1',
+        },
+      },
+      {
+        id: '',
+        active: {
+          primary_class: ' apple-primary',
+          secondary_class: ' apple-secondary',
+          number_class: ' apple-number',
+        },
+      },
       { id: 'random', value: 'false' },
       { id: 'dark', value: 'false' },
     ],
   },
 ];
+
+const numbers = keypad[0];
+const primaryOperators = keypad[1];
+const secondaryOperators = keypad[2];
+const colors = keypad[3];
 
 const input = document.querySelector('input');
 
@@ -124,7 +150,7 @@ const handleNumbers = ({ id, value }) => {
 };
 
 const isNumber = value =>
-  keypad[0].values.map(el => el.value !== '.' && el.value).includes(value);
+  numbers.values.map(el => el.value !== '.' && el.value).includes(value);
 
 const isFirstNumber = ({ firstNumber }) => firstNumber;
 
@@ -193,27 +219,64 @@ const handleComma = () => {
   return decimalNumber;
 };
 
-const handleColors = ({ id, value }) => {
-  const buttonValue = value;
-  const buttonId = id;
-  let btn = document.getElementById(id);
+const lilac = colors.values[0];
+const apple = colors.values[1];
 
-  const primaryButtons = keypad[1].values.map(el => el.id);
-  const secondaryButtons = keypad[2].values.map(el => el.id);
+const handleColors = clickedBtn => {
+  clickedBtn.id === 'lilac' && toggleColorTheme(clickedBtn, lilac);
 
-  if (buttonId === 'lilac' && buttonValue === 'false') {
-    console.log('lilac button clicked');
+  clickedBtn.id === '' && toggleColorTheme(clickedBtn, apple);
+};
 
-    primaryButtons.forEach(el => {
-      btn = document.getElementById(el);
-      btn.setAttribute('class', keypad[1].class + ' primary-purple');
-    });
+const toggleColorTheme = (button, { inactive, active }) => {
+  const isActive = button.getAttribute('value') === 'true';
 
-    secondaryButtons.forEach(el => {
-      btn = document.getElementById(el);
-      btn.setAttribute('class', keypad[2].class + ' secondary-purple');
-    });
+  button.setAttribute('value', isActive ? 'false' : 'true');
+
+  if (active.text) {
+    button.textContent = isActive ? inactive.text : active.text;
+    button.setAttribute(
+      'class',
+      isActive
+        ? primaryOperators.class + ` ${inactive.button_class}`
+        : active.button_class
+    );
   }
+
+  keypad.forEach(el => {
+    el.values.forEach(el => {
+      const btn = document.getElementById(el.id);
+      const isZero = el.id === 'zero';
+
+      el.role === 'number' &&
+        btn.setAttribute(
+          'class',
+          isActive
+            ? isZero
+              ? 'btn container btn-light m-1'
+              : numbers.class
+            : isZero
+            ? `btn container m-1 ${active.number_class}`
+            : numbers.class + ` ${active.number_class}`
+        );
+
+      el.role === 'primary' &&
+        btn.setAttribute(
+          'class',
+          isActive
+            ? primaryOperators.class
+            : `col m-1 ${active.primary_class}`
+        );
+
+      el.role === 'secondary' &&
+        btn.setAttribute(
+          'class',
+          isActive
+            ? secondaryOperators.class
+            : secondaryOperators.class + ` ${active.secondary_class}`
+        );
+    });
+  });
 };
 
 const initializeKeypad = () => {
@@ -221,15 +284,16 @@ const initializeKeypad = () => {
     values.forEach(({ id, value }) => {
       const btn = document.getElementById(id);
 
-      if (!isColor(id)) {
-        btn.addEventListener('click', () => handleNumbers({ id, value }));
-      } else {
-        btn.addEventListener('click', () => handleColors({ id, value }));
-      }
+      btn.addEventListener(
+        'click',
+        !isColor(id)
+          ? () => handleNumbers({ id, value })
+          : () => handleColors(btn)
+      );
     });
   });
 };
 
-const isColor = value => keypad[3].values.map(el => el.id).includes(value);
+const isColor = value => colors.values.map(el => el.id).includes(value);
 
 initializeKeypad();
