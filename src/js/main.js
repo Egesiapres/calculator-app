@@ -36,7 +36,7 @@ const keypad = [
       { id: 'percent', value: '%', role: 'secondary' },
       { id: 'negate', value: '+/-', role: 'secondary' },
     ],
-    class: 'btn blue-secondary col m-1',
+    class: 'blue-secondary col m-1',
   },
   {
     name: 'color-themes',
@@ -45,26 +45,40 @@ const keypad = [
         id: 'lilac',
         inactive: {
           text: 'Lilac',
-          button_class: 'lilac-primary',
+          button: 'lilac-primary',
+          background: 'col-6 p-1 bg-secondary-subtle rounded',
+          input: 'form-control form-control-lg text-end',
         },
         active: {
           text: 'Blue',
-          button_class: 'btn btn-primary col m-1',
-          primary_class: 'lilac-primary',
-          secondary_class: ' lilac-secondary',
-          number_class: 'btn btn-light col m-1',
+          button: 'btn btn-primary col m-1',
+          primary: 'lilac-primary',
+          secondary: 'lilac-secondary',
+          number: 'btn btn-light col',
+          background: 'col-6 p-1 bg-secondary-subtle rounded',
+          input: 'form-control form-control-lg text-end',
         },
+        role: 'color',
       },
       {
         id: '',
-        active: {
-          primary_class: ' apple-primary',
-          secondary_class: ' apple-secondary',
-          number_class: ' apple-number',
+        inactive: {
+          button: 'col m-1',
+          background: 'col-6 p-1 bg-secondary-subtle rounded',
+          input: 'form-control form-control-lg text-end',
         },
+        active: {
+          button: 'apple-button',
+          primary: 'apple-primary',
+          secondary: 'apple-secondary',
+          number: 'apple-number',
+          background: 'col-6 p-0 bg-dark rounded border-1 border-black',
+          input: 'bg-dark',
+        },
+        role: 'color',
       },
-      { id: 'random', value: 'false' },
-      { id: 'dark', value: 'false' },
+      { id: 'random', value: 'false', role: 'color' },
+      { id: 'dark', value: 'false', role: 'color' },
     ],
   },
 ];
@@ -228,18 +242,40 @@ const handleColors = clickedBtn => {
   clickedBtn.id === '' && toggleColorTheme(clickedBtn, apple);
 };
 
+const calculatorDiv = document.getElementById('calculator');
+
+const rows = document.querySelectorAll('div#calculator > div');
+console.log(rows);
+
 const toggleColorTheme = (button, { inactive, active }) => {
   const isActive = button.getAttribute('value') === 'true';
+  const isApple = button.id === '';
 
   button.setAttribute('value', isActive ? 'false' : 'true');
+
+  if (active.background) {
+    calculatorDiv.setAttribute(
+      'class',
+      isActive ? inactive.background : `${active.background}`
+    );
+
+    input.setAttribute(
+      'class',
+      isActive
+        ? inactive.input
+        : `form-control form-control-lg text-end ${isApple && 'text-white'} border-0 ${active.input}`
+    );
+
+    rows.forEach(el =>
+      el.setAttribute('class', isActive ? 'row ms-auto me-auto' : 'row m-0')
+    );
+  }
 
   if (active.text) {
     button.textContent = isActive ? inactive.text : active.text;
     button.setAttribute(
       'class',
-      isActive
-        ? primaryOperators.class + ` ${inactive.button_class}`
-        : active.button_class
+      isActive ? primaryOperators.class + ` ${inactive.button}` : active.button
     );
   }
 
@@ -253,11 +289,11 @@ const toggleColorTheme = (button, { inactive, active }) => {
           'class',
           isActive
             ? isZero
-              ? 'btn container btn-light m-1'
+              ? `btn container btn-light m-1`
               : numbers.class
             : isZero
-            ? `btn container m-1 ${active.number_class}`
-            : numbers.class + ` ${active.number_class}`
+            ? `btn container ${!isApple && 'm-1'} ${active.number}`
+            : `${active.number} ${!isApple && 'm-1'} col`
         );
 
       el.role === 'primary' &&
@@ -265,7 +301,7 @@ const toggleColorTheme = (button, { inactive, active }) => {
           'class',
           isActive
             ? primaryOperators.class
-            : `col m-1 ${active.primary_class}`
+            : `${active.primary} col ${!isApple && 'm-1'}`
         );
 
       el.role === 'secondary' &&
@@ -273,7 +309,28 @@ const toggleColorTheme = (button, { inactive, active }) => {
           'class',
           isActive
             ? secondaryOperators.class
-            : secondaryOperators.class + ` ${active.secondary_class}`
+            : `${active.secondary} btn col ${!isApple && 'm-1'}`
+        );
+
+      el.role === 'color' &&
+        button.id === '' &&
+        btn.setAttribute(
+          'class',
+          isActive
+            ? `${inactive.button} ${
+                btn.id === 'lilac'
+                  ? 'lilac-primary'
+                  : btn.id === 'dark'
+                  ? 'btn btn-dark'
+                  : 'btn btn-secondary'
+              }`
+            : `${
+                btn.id === 'lilac'
+                  ? 'lilac-primary'
+                  : btn.id === 'dark'
+                  ? 'btn btn-dark'
+                  : 'btn btn-secondary'
+              } ${active.button} ${!isApple && 'm-1'} col`
         );
     });
   });

@@ -12,15 +12,24 @@
     />
 
     <title>Calculator</title>
+    <link
+      type="image/png"
+      sizes="16x16"
+      rel="icon"
+      href="./img/icons8-calculator-color-16.png"
+    />
   </head>
 
-  <body class="bg-secondary">
+  <body>
     <div
       class="d-flex justify-content-center align-items-center"
       style="height: 100vh"
     >
-      <div class="col-6 p-3 bg-secondary-subtle rounded">
-        <form class="row p-2">
+      <div
+        class="col-6 p-1 bg-secondary-subtle rounded"
+        id="calculator"
+      >
+        <form class="row p-1">
           <div class="col">
             <input
               type="tel"
@@ -30,7 +39,7 @@
           </div>
         </form>
 
-        <div class="row m-1">
+        <div class="row ms-auto me-auto">
           <button
             type="button"
             class="blue-secondary col m-1"
@@ -64,7 +73,7 @@
             /
           </button>
         </div>
-        <div class="row m-1">
+        <div class="row ms-auto me-auto">
           <button
             type="button"
             class="btn btn-light col m-1"
@@ -98,7 +107,7 @@
             x
           </button>
         </div>
-        <div class="row m-1">
+        <div class="row ms-auto me-auto">
           <button
             type="button"
             class="btn btn-light col m-1"
@@ -132,7 +141,7 @@
             -
           </button>
         </div>
-        <div class="row m-1">
+        <div class="row ms-auto me-auto">
           <button
             type="button"
             class="btn btn-light col m-1"
@@ -166,7 +175,7 @@
             +
           </button>
         </div>
-        <div class="row m-1">
+        <div class="row ms-auto me-auto">
           <div class="col-6 ps-0 pe-2">
             <button
               type="button"
@@ -196,7 +205,9 @@
           </button>
         </div>
 
-        <div class="row m-1">
+        <div
+          class="row ms-auto me-auto"
+        >
           <button
             type="button"
             class="col m-1 lilac-primary"
@@ -219,7 +230,7 @@
             id="random"
             value="false"
           >
-            Shuffle
+            Rand
           </button>
           <button
             type="button"

@@ -10,93 +10,130 @@ $colors: (
 
 $text-color: white;
 
+body {
+  background-color: $gray-700;
+}
+
 button {
-  border-radius: 7px;
+  border-radius: 6px;
 }
 
 // default palette
 .blue-secondary {
   background-color: $blue-300;
-  border: solid $blue-300;
+  border: 1px solid $blue-300;
   color: $text-color;
 
   &:hover {
     background-color: $blue-400;
-    border: solid $blue-400;
+    border: 1px solid $blue-400;
     color: $text-color;
   }
 
   &:active {
     background-color: darken($blue-400, 2%);
-    border: solid darken($blue-400, 2%);
-    color: $text-color
+    border: 1px solid darken($blue-400, 2%);
+    color: $text-color;
   }
 }
 
 // lilac palette
 .lilac-primary {
   background-color: $purple-500;
-  border: solid $purple-500;
+  border: 1px solid $purple-500;
   color: $text-color;
+  
 
   &:hover {
     background-color: $purple-600;
-    border: solid $purple-600;
+    border: 1px solid $purple-600;
     color: $text-color;
   }
 
   &:active {
     background-color: darken($purple-600, 2%);
-    border: solid darken($purple-600, 2%);
+    border: 1px solid darken($purple-600, 2%);
     color: $text-color;
   }
 }
 
 .lilac-secondary {
   background-color: $purple-300;
-  border-color: $purple-300;
+  border: 1px solid $purple-300;
   color: $text-color;
 
   &:hover {
     background-color: $purple-400;
-    border-color: $purple-400;
+    border: 1px solid $purple-400;
+    color: $text-color;
+  }
+
+  &:active {
+    background-color: darken($purple-400, 2%);
+    border: 1px solid darken($purple-400, 2%);
     color: $text-color;
   }
 }
 
 // apple palette
+.apple-button {
+  border: 0.5px solid $gray-800;
+  border-radius: 0;
+  padding: 10px;
+}
+
 .apple-primary {
-  background-color: $orange-500;
-  border-color: $orange-500;
+  background-color: #FF9F0A;
+  border: 0.5px solid $gray-800;
+  border-radius: 0;
   color: $text-color;
+  padding: 10px;
 
   &:hover {
-    background-color: $orange-600;
-    border-color: $orange-600;
+    background-color: darken(#FF9F0A, 5%);
+    color: $text-color;
+  }
+
+  &:active {
+    background-color: darken(#FF9F0A, 10%);
     color: $text-color;
   }
 }
 
 .apple-secondary {
   background-color: $gray-700;
-  border-color: $gray-700;
+  opacity: 0.8;
+  border: 0.5px solid $gray-800;
+  border-radius: 0;
   color: $text-color;
+  padding: 10px;
 
   &:hover {
-    background-color: $gray-800;
-    border-color: $gray-800;
+    background-color: $gray-600;
+    color: $text-color;
+  }
+
+  &:active {
+    background-color: darken($gray-800, 2%);
     color: $text-color;
   }
 }
 
 .apple-number {
-  background-color: $gray-500;
-  border-color: $gray-500;
+  background-color: $gray-600;
+  opacity: 0.9;
+  border: 0.5px solid $gray-800;
+  border-radius: 0;
   color: $text-color;
+  padding: 10px;
 
   &:hover {
-    background-color: $gray-600;
-    border-color: $gray-600;
+    background-color: $gray-500;
+    color: $text-color;
+  }
+
+  &:active {
+    background-color: darken($gray-700, 2%);
     color: $text-color;
   }
 }
