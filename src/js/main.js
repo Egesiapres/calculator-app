@@ -1,5 +1,13 @@
 import '../scss/styles.scss';
 
+const input = document.querySelector('input');
+
+const background = document.getElementById('background');
+
+const inputClass = input.getAttribute('class');
+
+const backgroundClass = background.getAttribute('class');
+
 const keypad = [
   {
     name: 'numbers',
@@ -42,38 +50,40 @@ const keypad = [
     name: 'color-themes',
     values: [
       {
-        id: 'lilac',
-        inactive: {
+        id: 'blue',
+        active: {
           text: 'Lilac',
-          button: 'lilac-primary',
-          background: 'col-6 p-1 bg-secondary-subtle rounded',
-          input: 'form-control form-control-lg text-end',
+          button: 'col m-1',
+          background: backgroundClass,
+          input: inputClass,
         },
+        role: 'color',
+      },
+      {
+        id: 'lilac',
         active: {
           text: 'Blue',
           button: 'btn btn-primary col m-1',
           primary: 'lilac-primary',
           secondary: 'lilac-secondary',
           number: 'btn btn-light col',
-          background: 'col-6 p-1 bg-secondary-subtle rounded',
-          input: 'form-control form-control-lg text-end',
+          background: backgroundClass,
+          input: inputClass,
         },
         role: 'color',
       },
       {
         id: '',
-        inactive: {
-          button: 'col m-1',
-          background: 'col-6 p-1 bg-secondary-subtle rounded',
-          input: 'form-control form-control-lg text-end',
-        },
         active: {
           button: 'apple-button',
           primary: 'apple-primary',
           secondary: 'apple-secondary',
           number: 'apple-number',
-          background: 'col-6 p-0 bg-dark rounded border-1 border-black',
-          input: 'bg-dark',
+          background: `${backgroundClass.substring(
+            0,
+            backgroundClass.indexOf(' p-1 bg-secondary-subtle')
+          )} apple-background`,
+          input: `${inputClass} apple-background border-0 text-white`,
         },
         role: 'color',
       },
@@ -87,8 +97,6 @@ const numbers = keypad[0];
 const primaryOperators = keypad[1];
 const secondaryOperators = keypad[2];
 const colors = keypad[3];
-
-const input = document.querySelector('input');
 
 let inputValues = {
   firstNumber: null,
@@ -233,8 +241,9 @@ const handleComma = () => {
   return decimalNumber;
 };
 
-const lilac = colors.values[0];
-const apple = colors.values[1];
+const blue = colors.values[0];
+const lilac = colors.values[1];
+const apple = colors.values[2];
 
 const handleColors = clickedBtn => {
   clickedBtn.id === 'lilac' && toggleColorTheme(clickedBtn, lilac);
@@ -242,29 +251,59 @@ const handleColors = clickedBtn => {
   clickedBtn.id === '' && toggleColorTheme(clickedBtn, apple);
 };
 
-const calculatorDiv = document.getElementById('calculator');
-
 const rows = document.querySelectorAll('div#calculator > div');
-console.log(rows);
 
-const toggleColorTheme = (button, { inactive, active }) => {
+let colorValues = {
+  lilac: { value: 'false', text: 'Lilac' },
+  '': { value: 'false' },
+  random: { value: 'false', text: 'Rand' },
+  dark: { value: 'false', text: 'Dark' },
+};
+
+const setColorValue = colorValue => {
+  console.log(colorValues);
+  console.log(colorValue);
+
+  // update all the other color states to false
+  Object.keys(colorValues)
+    .filter(el => el !== colorValue)
+    .map(el => (colorValues[el] = 'false'));
+
+  // update the clicked colo state
+  colorValues[colorValue] === 'true'
+    ? (colorValues[colorValue] = 'false')
+    : (colorValues[colorValue] = 'true');
+
+  console.log(colorValues);
+};
+
+// blue active = others inactive
+const { active: inactive } = blue;
+
+const toggleColorTheme = (button, { active }) => {
+  // setColorValue(button.id);
+
+  // update all the color button values to false
+  Object.keys(colorValues)
+    .filter(el => el !== button.id)
+    .forEach(el => {
+      const colorButton = document.getElementById(el);
+      colorButton.setAttribute('value', 'false');
+    });
+
   const isActive = button.getAttribute('value') === 'true';
-  const isApple = button.id === '';
 
   button.setAttribute('value', isActive ? 'false' : 'true');
 
+  const isApple = button.id === '';
+
   if (active.background) {
-    calculatorDiv.setAttribute(
+    background.setAttribute(
       'class',
-      isActive ? inactive.background : `${active.background}`
+      isActive ? inactive.background : active.background
     );
 
-    input.setAttribute(
-      'class',
-      isActive
-        ? inactive.input
-        : `form-control form-control-lg text-end ${isApple && 'text-white'} border-0 ${active.input}`
-    );
+    input.setAttribute('class', isActive ? inactive.input : active.input);
 
     rows.forEach(el =>
       el.setAttribute('class', isActive ? 'row ms-auto me-auto' : 'row m-0')
@@ -313,10 +352,10 @@ const toggleColorTheme = (button, { inactive, active }) => {
         );
 
       el.role === 'color' &&
-        button.id === '' &&
+        el.id !== 'blue' &&
         btn.setAttribute(
           'class',
-          isActive
+          isActive || isApple
             ? `${inactive.button} ${
                 btn.id === 'lilac'
                   ? 'lilac-primary'
@@ -326,11 +365,11 @@ const toggleColorTheme = (button, { inactive, active }) => {
               }`
             : `${
                 btn.id === 'lilac'
-                  ? 'lilac-primary'
+                  ? 'btn btn-primary'
                   : btn.id === 'dark'
                   ? 'btn btn-dark'
                   : 'btn btn-secondary'
-              } ${active.button} ${!isApple && 'm-1'} col`
+              } ${inactive.button} ${!isApple && 'm-1'} col`
         );
     });
   });
@@ -339,14 +378,16 @@ const toggleColorTheme = (button, { inactive, active }) => {
 const initializeKeypad = () => {
   keypad.forEach(({ values }) => {
     values.forEach(({ id, value }) => {
-      const btn = document.getElementById(id);
+      if (id !== 'blue') {
+        const btn = document.getElementById(id);
 
-      btn.addEventListener(
-        'click',
-        !isColor(id)
-          ? () => handleNumbers({ id, value })
-          : () => handleColors(btn)
-      );
+        btn.addEventListener(
+          'click',
+          !isColor(id)
+            ? () => handleNumbers({ id, value })
+            : () => handleColors(btn)
+        );
+      }
     });
   });
 };

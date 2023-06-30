@@ -43,7 +43,6 @@ button {
   border: 1px solid $purple-500;
   color: $text-color;
   
-
   &:hover {
     background-color: $purple-600;
     border: 1px solid $purple-600;
@@ -128,12 +127,24 @@ button {
   padding: 10px;
 
   &:hover {
-    background-color: $gray-500;
+    background-color: lighten($gray-600, 10%);
     color: $text-color;
   }
 
   &:active {
-    background-color: darken($gray-700, 2%);
+    background-color: $gray-500;
     color: $text-color;
+  }
+}
+
+.apple-background {
+  background-color: darken($gray-800, 3%);
+
+  &:hover {
+    background-color: darken($gray-800, 3%);
+  }
+  
+  &:active {
+    background-color: darken($gray-800, 3%);
   }
 }
