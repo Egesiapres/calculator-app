@@ -1,12 +1,12 @@
 import '../scss/styles.scss';
 
-const input = document.querySelector('input');
-
 const background = document.getElementById('background');
 
-const inputClass = input.getAttribute('class');
+const input = document.querySelector('input');
 
-const backgroundClass = background.getAttribute('class');
+const rows = document.querySelectorAll('div#calculator > div');
+
+const zeroDiv = document.getElementById('zero-div');
 
 const keypad = [
   {
@@ -54,8 +54,8 @@ const keypad = [
         active: {
           text: 'Lilac',
           button: 'col m-1',
-          background: backgroundClass,
-          input: inputClass,
+          background: 'col-6 rounded p-1 bg-secondary-subtle',
+          input: 'form-control form-control-lg text-end',
         },
         role: 'color',
       },
@@ -67,8 +67,8 @@ const keypad = [
           primary: 'lilac-primary',
           secondary: 'lilac-secondary',
           number: 'btn btn-light col',
-          background: backgroundClass,
-          input: inputClass,
+          background: 'col-6 rounded p-1 bg-secondary-subtle',
+          input: 'form-control form-control-lg text-end',
         },
         role: 'color',
       },
@@ -79,11 +79,9 @@ const keypad = [
           primary: 'apple-primary',
           secondary: 'apple-secondary',
           number: 'apple-number',
-          background: `${backgroundClass.substring(
-            0,
-            backgroundClass.indexOf(' p-1 bg-secondary-subtle')
-          )} apple-background`,
-          input: `${inputClass} apple-background border-0 text-white`,
+          background: 'col-6 rounded apple-background',
+          input:
+            'form-control form-control-lg text-end text-white border-0 apple-background',
         },
         role: 'color',
       },
@@ -251,38 +249,17 @@ const handleColors = clickedBtn => {
   clickedBtn.id === '' && toggleColorTheme(clickedBtn, apple);
 };
 
-const rows = document.querySelectorAll('div#calculator > div');
-
 let colorValues = {
-  lilac: { value: 'false', text: 'Lilac' },
-  '': { value: 'false' },
-  random: { value: 'false', text: 'Rand' },
-  dark: { value: 'false', text: 'Dark' },
-};
-
-const setColorValue = colorValue => {
-  console.log(colorValues);
-  console.log(colorValue);
-
-  // update all the other color states to false
-  Object.keys(colorValues)
-    .filter(el => el !== colorValue)
-    .map(el => (colorValues[el] = 'false'));
-
-  // update the clicked colo state
-  colorValues[colorValue] === 'true'
-    ? (colorValues[colorValue] = 'false')
-    : (colorValues[colorValue] = 'true');
-
-  console.log(colorValues);
+  lilac: 'false',
+  '': 'false',
+  random: 'false',
+  dark: 'false',
 };
 
 // blue active = others inactive
 const { active: inactive } = blue;
 
 const toggleColorTheme = (button, { active }) => {
-  // setColorValue(button.id);
-
   // update all the color button values to false
   Object.keys(colorValues)
     .filter(el => el !== button.id)
@@ -290,6 +267,12 @@ const toggleColorTheme = (button, { active }) => {
       const colorButton = document.getElementById(el);
       colorButton.setAttribute('value', 'false');
     });
+
+  // 'resets' the lilac button text
+  if (button.id !== 'lilac') {
+    const lilacBtn = document.getElementById('lilac');
+    lilacBtn.textContent = inactive.text;
+  }
 
   const isActive = button.getAttribute('value') === 'true';
 
@@ -328,11 +311,23 @@ const toggleColorTheme = (button, { active }) => {
           'class',
           isActive
             ? isZero
-              ? `btn container btn-light m-1`
+              ? `btn btn-light container m-1`
               : numbers.class
             : isZero
-            ? `btn container ${!isApple && 'm-1'} ${active.number}`
-            : `${active.number} ${!isApple && 'm-1'} col`
+            ? `${active.number} container ${!isApple && 'm-1'} ${active.number}`
+            : `${active.number} col ${!isApple && 'm-1'}`
+        );
+
+      el.role === 'number' &&
+        zeroDiv.setAttribute(
+          'class',
+          isActive
+            ? isApple
+              ? 'col-6 ps-0 pe-2'
+              : 'col-6 ps-0 pe-2'
+            : isApple
+            ? 'col-6 p-0'
+            : 'col-6 ps-0 pe-2'
         );
 
       el.role === 'primary' &&
@@ -348,28 +343,32 @@ const toggleColorTheme = (button, { active }) => {
           'class',
           isActive
             ? secondaryOperators.class
-            : `${active.secondary} btn col ${!isApple && 'm-1'}`
+            : `${active.secondary} col ${!isApple && 'm-1'}`
         );
 
       el.role === 'color' &&
         el.id !== 'blue' &&
         btn.setAttribute(
           'class',
-          isActive || isApple
-            ? `${inactive.button} ${
+          isActive
+            ? `${
                 btn.id === 'lilac'
-                  ? 'lilac-primary'
+                  ? `${lilac.active.primary}`
                   : btn.id === 'dark'
-                  ? 'btn btn-dark'
-                  : 'btn btn-secondary'
-              }`
+                  ? `btn btn-dark`
+                  : `btn btn-secondary`
+              } ${inactive.button}`
             : `${
                 btn.id === 'lilac'
-                  ? 'btn btn-primary'
+                  ? `${!isApple ? lilac.active.button : 'apple-lilac'} ${
+                      isApple && 'apple-color'
+                    }`
                   : btn.id === 'dark'
-                  ? 'btn btn-dark'
-                  : 'btn btn-secondary'
-              } ${inactive.button} ${!isApple && 'm-1'} col`
+                  ? `${!isApple ? 'btn btn-dark' : 'apple-dark'} ${
+                      isApple && 'apple-color'
+                    }`
+                  : `btn btn-secondary ${isApple && 'apple-number'}`
+              } col ${!isApple && 'm-1'}`
         );
     });
   });
