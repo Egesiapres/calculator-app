@@ -11,4 +11,4 @@ I wanted to create not just a calculator, but a fancy one. My version is able to
 * Dark
 
 ### 2. Tools
-* Code: HTML, SCSS, JS, bootstrap
+HTML, SCSS, JS, bootstrap
