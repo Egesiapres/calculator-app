@@ -37,7 +37,7 @@ button {
   }
 }
 
-[data-bs-theme="blue-dark"] {
+[data-bs-theme='blue-dark'] {
   --bs-backgroud-color: #{$blue-700};
   --bs-body-color: var(--bs-white);
   --bs-body-color-rgb: #{to-rgb($white)};
@@ -46,7 +46,10 @@ button {
   --bs-tertiary-bg: #{$blue-600};
 
   .blue-secondary {
-    color: red;
+    background-color: $blue-600;
+    border: 1px solid $blue-600;
+    color: $text-color;
+    --bs-btn-bg: #{mix($gray-600, $blue-400, .5%)};
   }
 }
 

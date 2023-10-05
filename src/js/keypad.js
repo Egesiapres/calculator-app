@@ -84,7 +84,7 @@ export const keypad = [
         id: 'dark',
         active: {
           text: 'Light',
-          html: 'blue',
+          html: 'blue-dark',
         },
         role: 'color',
       },
