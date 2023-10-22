@@ -7,8 +7,6 @@ A personal project to improve my vanilla JS and bootstrap skills
 I wanted to create not just a calculator, but a fancy one. My version is able to do the traditional calculations, and offers the possibility to change the aesthetic picking one of the available themes:
 * Lilac
 * Apple
-* Random
-* Dark
 
 ### 2. Tools
 HTML, SCSS, JS, bootstrap
