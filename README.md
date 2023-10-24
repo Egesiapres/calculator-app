@@ -1,4 +1,4 @@
-# Bootstrap calculator
+# Calculator app
 
 ### Description
 A personal project to improve my vanilla JS and bootstrap skills
